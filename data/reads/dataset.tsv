@@ -1,0 +1,36 @@
+Name	Read1 [File]	BarcodeSequence [Factor]	BodySite [Factor]	Year [Factor]	Month [Factor]	Day [Factor]	Subject [Factor]	ReportedAntibioticUsage [Factor]	DaysSinceExperimentStart [Factor]
+L1S105	p6000/16S_EarthMicrobiome/L1S105_9_L001_R1_001.fastq.gz	AGTGCGATGCGT	gut	2009	3	17	subject-1	No	140
+L1S140	p6000/16S_EarthMicrobiome/L1S140_6_L001_R1_001.fastq.gz	ATGGCAGCTCTA	gut	2008	10	28	subject-2	Yes	0
+L1S208	p6000/16S_EarthMicrobiome/L1S208_10_L001_R1_001.fastq.gz	CTGAGATACGCG	gut	2009	1	20	subject-2	No	84
+L1S257	p6000/16S_EarthMicrobiome/L1S257_11_L001_R1_001.fastq.gz	CCGACTGAGATG	gut	2009	3	17	subject-2	No	140
+L1S281	p6000/16S_EarthMicrobiome/L1S281_5_L001_R1_001.fastq.gz	CCTCTCGTGATC	gut	2009	4	14	subject-2	No	168
+L1S57	p6000/16S_EarthMicrobiome/L1S57_13_L001_R1_001.fastq.gz	ACACACTATGGC	gut	2009	1	20	subject-1	No	84
+L1S76	p6000/16S_EarthMicrobiome/L1S76_12_L001_R1_001.fastq.gz	ACTACGTGTGGT	gut	2009	2	17	subject-1	No	112
+L1S8	p6000/16S_EarthMicrobiome/L1S8_8_L001_R1_001.fastq.gz	AGCTGACTAGTC	gut	2008	10	28	subject-1	Yes	0
+L2S155	p6000/16S_EarthMicrobiome/L2S155_25_L001_R1_001.fastq.gz	ACGATGCGACCA	left_palm	2009	1	20	subject-1	No	84
+L2S175	p6000/16S_EarthMicrobiome/L2S175_27_L001_R1_001.fastq.gz	AGCTATCCACGA	left_palm	2009	2	17	subject-1	No	112
+L2S204	p6000/16S_EarthMicrobiome/L2S204_1_L001_R1_001.fastq.gz	ATGCAGCTCAGT	left_palm	2009	3	17	subject-1	No	140
+L2S222	p6000/16S_EarthMicrobiome/L2S222_23_L001_R1_001.fastq.gz	CACGTGACATGT	left_palm	2009	4	14	subject-1	No	168
+L2S240	p6000/16S_EarthMicrobiome/L2S240_7_L001_R1_001.fastq.gz	CATATCGCAGTT	left_palm	2008	10	28	subject-2	Yes	0
+L2S309	p6000/16S_EarthMicrobiome/L2S309_33_L001_R1_001.fastq.gz	CGTGCATTATCA	left_palm	2009	1	20	subject-2	No	84
+L2S357	p6000/16S_EarthMicrobiome/L2S357_15_L001_R1_001.fastq.gz	CTAACGCAGTCA	left_palm	2009	3	17	subject-2	No	140
+L2S382	p6000/16S_EarthMicrobiome/L2S382_34_L001_R1_001.fastq.gz	CTCAATGACTCA	left_palm	2009	4	14	subject-2	No	168
+L3S242	p6000/16S_EarthMicrobiome/L3S242_19_L001_R1_001.fastq.gz	ACAGTTGCGCGA	right_palm	2008	10	28	subject-1	Yes	0
+L3S294	p6000/16S_EarthMicrobiome/L3S294_16_L001_R1_001.fastq.gz	CACGACAGGCTA	right_palm	2009	1	20	subject-1	No	84
+L3S313	p6000/16S_EarthMicrobiome/L3S313_32_L001_R1_001.fastq.gz	AGTGTCACGGTG	right_palm	2009	2	17	subject-1	No	112
+L3S341	p6000/16S_EarthMicrobiome/L3S341_18_L001_R1_001.fastq.gz	CAAGTGAGAGAG	right_palm	2009	3	17	subject-1	No	140
+L3S360	p6000/16S_EarthMicrobiome/L3S360_4_L001_R1_001.fastq.gz	CATCGTATCAAC	right_palm	2009	4	14	subject-1	No	168
+L3S378	p6000/16S_EarthMicrobiome/L3S378_24_L001_R1_001.fastq.gz	ATCGATCTGTGG	right_palm	2008	10	28	subject-2	Yes	0
+L4S112	p6000/16S_EarthMicrobiome/L4S112_26_L001_R1_001.fastq.gz	GCGTTACACACA	right_palm	2009	3	17	subject-2	No	140
+L4S137	p6000/16S_EarthMicrobiome/L4S137_21_L001_R1_001.fastq.gz	GAACTGTATCTC	right_palm	2009	4	14	subject-2	No	168
+L4S63	p6000/16S_EarthMicrobiome/L4S63_31_L001_R1_001.fastq.gz	CTCGTGGAGTAG	right_palm	2009	1	20	subject-2	No	84
+L5S104	p6000/16S_EarthMicrobiome/L5S104_28_L001_R1_001.fastq.gz	CAGTGTCAGGAC	tongue	2008	10	28	subject-1	Yes	0
+L5S155	p6000/16S_EarthMicrobiome/L5S155_2_L001_R1_001.fastq.gz	ATCTTAGACTGC	tongue	2009	1	20	subject-1	No	84
+L5S174	p6000/16S_EarthMicrobiome/L5S174_29_L001_R1_001.fastq.gz	CAGACATTGCGT	tongue	2009	2	17	subject-1	No	112
+L5S203	p6000/16S_EarthMicrobiome/L5S203_3_L001_R1_001.fastq.gz	CGATGCACCAGA	tongue	2009	3	17	subject-1	No	140
+L5S222	p6000/16S_EarthMicrobiome/L5S222_17_L001_R1_001.fastq.gz	CTAGAGACTCTT	tongue	2009	4	14	subject-1	No	168
+L5S240	p6000/16S_EarthMicrobiome/L5S240_14_L001_R1_001.fastq.gz	CTGGACTCATAG	tongue	2008	10	28	subject-2	Yes	0
+L6S20	p6000/16S_EarthMicrobiome/L6S20_20_L001_R1_001.fastq.gz	GAGGCTCATCAT	tongue	2009	1	20	subject-2	No	84
+L6S68	p6000/16S_EarthMicrobiome/L6S68_30_L001_R1_001.fastq.gz	GATACGTCCTGA	tongue	2009	3	17	subject-2	No	140
+L6S93	p6000/16S_EarthMicrobiome/L6S93_22_L001_R1_001.fastq.gz	GATTAGCACTCT	tongue	2009	4	14	subject-2	No	168
+
