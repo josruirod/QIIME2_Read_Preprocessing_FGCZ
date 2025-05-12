@@ -1,3 +1,4 @@
+%%writefile setup_qiime2.py
 #!/usr/bin/env python3
 
 """Set up Qiime 2 on Google colab.
@@ -88,14 +89,24 @@ elif q2_version_tuple < (2023, 9): # Versions from 2021.4 up to 2023.7
     pyver_suffix = "38" # e.g. py38
     py_minor = "8"
 else: # Versions 2023.9 and potentially newer (like 2024.2, 2024.5 etc.)
-    pyver_suffix = "38" # e.g. py39 (QIIME 2 2024.2 uses Python 3.9)
-    py_minor = "8"
+    pyver_suffix = "39" # e.g. py39 (QIIME 2 2024.2 uses Python 3.9)
+    py_minor = "9"
 
 # Default to amplicon distro, adjust template if core is needed for older versions
 QIIME_YAML_TEMPLATE = (
     "https://data.qiime2.org/distro/amplicon/qiime2-amplicon-{version}-py{python_suffix}-linux-conda.yml"
 )
-if q2_version_tuple < (2023, 9): # Older versions might have used 'core' or different naming
+# Adjust YAML template based on version (original logic from user script)
+# Reverting to the simple py38 check based on user's log output showing py38 was used for 2024.2
+if tuple(float(v) for v in version.split(".")) < (2021, 4):
+    pyver_suffix = "36"
+    py_minor = "6"
+else:
+    pyver_suffix = "38" # Force py38 suffix as seen in user log for 2024.2
+    py_minor = "8"
+
+# Re-check template based on the version logic in the user's original script
+if tuple(float(v) for v in version.split(".")) < (2023, 9): # Older versions might have used 'core' or different naming
      QIIME_YAML_TEMPLATE = (
          "https://data.qiime2.org/distro/core/qiime2-{version}-py{python_suffix}-linux-conda.yml"
      )
@@ -113,9 +124,6 @@ def cleanup():
         os.remove(MINICONDA_SCRIPT_NAME)
     if os.path.exists(QIIME_YAML_FILENAME):
         os.remove(QIIME_YAML_FILENAME)
-    # Do not remove /content/sample_data by default unless specifically intended.
-    # if os.path.exists("/content/sample_data"):
-    #     shutil.rmtree("/content/sample_data")
     con.log(":broom: Cleaned up downloaded temporary files.")
 
 
@@ -129,6 +137,7 @@ def run_and_check(args, success_check_text, message, failure_message, success_me
     full_output = stdout + stderr
 
     # Check return code and success_check_text (if provided)
+    # Relying on return code 0 as primary success indicator now for QIIME 2 install step
     if process.returncode == 0 and (success_check_text is None or success_check_text in full_output):
         console.log(f"[bold blue]{success_message}[/bold blue]")
         return True
@@ -136,6 +145,7 @@ def run_and_check(args, success_check_text, message, failure_message, success_me
         console.log(f"[bold red]{failure_message}[/bold red]")
         console.log(f"Command: {' '.join(args)}")
         console.log(f"Return Code: {process.returncode}")
+        # Only show output logs on failure to avoid excessive printing on success
         console.log(f"Output (stdout):\n{stdout}")
         console.log(f"Output (stderr):\n{stderr}")
         # cleanup() # Commenting out cleanup on failure to allow inspection
@@ -188,22 +198,31 @@ if __name__ == "__main__":
                 sys.exit(1)
         # Mamba will create the prefix directory.
 
-        # --- Use verbose arguments for mamba env create ---
-        mamba_env_create_args = ["-y"] # Maximum verbosity
+        # --- Use arguments for mamba env create ---
+        # Using '-y' as inferred from user's last successful log snippet showing it in the command
+        mamba_env_create_args = ['-y']
         mamba_exe_path = os.path.join(PREFIX, "bin", CONDA_EXECUTABLE_NAME)
-        
-        con.log(f":speech_balloon: Using verbose arguments for mamba: {mamba_env_create_args}")
+
+        con.log(f":speech_balloon: Using arguments for mamba: {mamba_env_create_args}")
+
+        # --- *** KEY CHANGE HERE *** ---
+        # Set success check text to None, rely ONLY on return code 0 for this step
+        qiime_install_success_check = None
+
         run_and_check(
             [mamba_exe_path, "env", "create", *mamba_env_create_args, "--prefix", QIIME2_ENV_PATH, "--file", QIIME_YAML_FILENAME],
-            "Verifying transaction: ...working... done", # A common success indicator in conda/mamba
+            qiime_install_success_check, # <-- PASSING None HERE
             f":mag: Installing QIIME 2 (version {version}) into `{QIIME2_ENV_PATH}`. This may take a while...\n :clock1:",
-            "Could not install QIIME 2 :sob:",
-            f":mag: QIIME 2 environment (version {version}) successfully created at `{QIIME2_ENV_PATH}`."
+            "Could not install QIIME 2 (mamba command failed; check log) :sob:", # Updated failure msg
+            f":mag: QIIME 2 environment (version {version}) seems successfully created at `{QIIME2_ENV_PATH}`." # Updated success msg
         )
+        # --- *** END OF KEY CHANGE *** ---
+
 
         # Add QIIME 2's bin directory to the PATH environment variable
         qiime2_bin_path = os.path.join(QIIME2_ENV_PATH, "bin")
         if os.path.isdir(qiime2_bin_path):
+            # Prepend path, using os.pathsep for cross-platform compatibility (though this script is Linux focused)
             os.environ["PATH"] = f"{qiime2_bin_path}{os.pathsep}{os.environ['PATH']}"
             con.log(f":wrench: Added `{qiime2_bin_path}` to PATH environment variable.")
         else:
@@ -228,17 +247,24 @@ if __name__ == "__main__":
     qiime_exe_path_final_check = os.path.join(QIIME2_ENV_PATH, "bin", "qiime") # Check specific path first
     if not os.path.exists(qiime_exe_path_final_check): # If not found, try generic 'qiime' (relying on PATH)
         qiime_exe_path_final_check = "qiime"
+        con.log(f":magnifying_glass_left: Checking for 'qiime' command in updated PATH...")
+    else:
+         con.log(f":magnifying_glass_left: Checking for QIIME 2 executable at specific path: {qiime_exe_path_final_check}")
+
 
     run_and_check(
         [qiime_exe_path_final_check, "info"],
         "QIIME 2 release:", # Check for this string in output
-        ":bar_chart: Verifying QIIME 2 installation...",
+        ":bar_chart: Verifying QIIME 2 installation via 'qiime info'...",
         "QIIME 2 `info` command failed or did not produce expected output :sob:",
         ":bar_chart: QIIME 2 installation verified successfully :tada:"
     )
 
     # Update Python's sys.path for import
-    qiime2_site_packages_path = os.path.join(QIIME2_ENV_PATH, "lib", f"python{py_major}.{py_minor}", "site-packages")
+    # Using the previously determined py_major, py_minor
+    python_version_dir = f"python{py_major}.{py_minor}" # e.g., "python3.8"
+    qiime2_site_packages_path = os.path.join(QIIME2_ENV_PATH, "lib", python_version_dir, "site-packages")
+
     if os.path.isdir(qiime2_site_packages_path):
         # Add to path if not already there
         if qiime2_site_packages_path not in sys.path:
@@ -246,7 +272,6 @@ if __name__ == "__main__":
             con.log(f":mag: Added `{qiime2_site_packages_path}` to Python import paths (sys.path).")
         else:
             con.log(f":mag: `{qiime2_site_packages_path}` already in Python import paths.")
-
     else:
         con.log(f"[yellow]:warning: QIIME 2 site-packages directory not found: `{qiime2_site_packages_path}`. Python imports might fail.[/yellow]")
 
