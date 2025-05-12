@@ -15,7 +15,7 @@ r.wait()
 from rich.console import Console  # noqa
 con = Console()
 
-PREFIX = "/usr/local/miniforge3/"
+PREFIX = "/content/miniforge3/"
 
 has_conda = "conda version" in os.popen("%s/bin/conda info" % PREFIX).read()
 has_qiime = "QIIME 2 release:" in os.popen("qiime info").read()
@@ -92,7 +92,7 @@ if __name__ == "__main__":
             "installation finished.",
             ":snake: Installing miniforge...",
             "could not install miniforge :sob:",
-            ":snake: Installed miniforge to `/usr/local`."
+            ":snake: Installed miniforge to `/content`."
         )
     else:
         con.log(":snake: Miniforge is already installed. Skipped.")
@@ -107,7 +107,7 @@ if __name__ == "__main__":
         )
 
         run_and_check(
-            [PREFIX + "bin/" + CONDA, "env", "create", *CONDA_ARGS, "--prefix", "/usr/local", "--file", QIIME_YAML],
+            [PREFIX + "bin/" + CONDA, "env", "create", *CONDA_ARGS, "--prefix", "/content", "--file", QIIME_YAML],
             "Verifying transaction: ...working... done",
             ":mag: Installing Qiime 2. This may take a little bit.\n :clock1:",
             "could not install Qiime 2 :sob:",
