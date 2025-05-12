@@ -88,8 +88,8 @@ elif q2_version_tuple < (2023, 9): # Versions from 2021.4 up to 2023.7
     pyver_suffix = "38" # e.g. py38
     py_minor = "8"
 else: # Versions 2023.9 and potentially newer (like 2024.2, 2024.5 etc.)
-    pyver_suffix = "39" # e.g. py39 (QIIME 2 2024.2 uses Python 3.9)
-    py_minor = "9"
+    pyver_suffix = "38" # e.g. py39 (QIIME 2 2024.2 uses Python 3.9)
+    py_minor = "8"
 
 # Default to amplicon distro, adjust template if core is needed for older versions
 QIIME_YAML_TEMPLATE = (
