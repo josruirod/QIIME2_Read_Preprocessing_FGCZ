@@ -1,4 +1,3 @@
-%%writefile setup_qiime2.py
 #!/usr/bin/env python3
 
 """Set up Qiime 2 on Google colab.
