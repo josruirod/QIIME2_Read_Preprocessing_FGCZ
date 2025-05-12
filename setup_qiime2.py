@@ -189,7 +189,7 @@ if __name__ == "__main__":
         # Mamba will create the prefix directory.
 
         # --- Use verbose arguments for mamba env create ---
-        mamba_env_create_args = ["-vvv"] # Maximum verbosity
+        mamba_env_create_args = ["-y"] # Maximum verbosity
         mamba_exe_path = os.path.join(PREFIX, "bin", CONDA_EXECUTABLE_NAME)
         
         con.log(f":speech_balloon: Using verbose arguments for mamba: {mamba_env_create_args}")
